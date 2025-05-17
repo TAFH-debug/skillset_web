@@ -12,15 +12,15 @@ const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 // Initialize ffmpeg-wasm instance
 const ffmpeg = new FFmpeg();
 
-const INITIAL_RANGES = [
-  { begin: 5, end: 12 },
-  { begin: 30, end: 42 },
-  { begin: 60, end: 75 },
+const clipMap = [
+  { id: 0, title: 'WATER BUCKET RELEASE', begin: 5, end: 12 },
+  { id: 1, title: 'FLINT AND STEEL', begin: 30, end: 42 },
+  { id: 2, title: 'ELYTRA', begin: 70, end: 84 },
 ];
 
 export default function VideoEditor() {
   const playerRef = useRef<any>(null);
-  const [ranges, setRanges] = useState(INITIAL_RANGES);
+  const [ranges, setRanges] = useState(clipMap);
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,7 @@ export default function VideoEditor() {
   }, []);
 
   // Export the current segment using ffmpeg.wasm
-  const exportTrim = async () => {
+  const exportClip = async () => {
     setLoading(true);
 
     const { begin, end } = ranges[activeTab];
@@ -55,11 +55,8 @@ export default function VideoEditor() {
     );
     const a = document.createElement('a');
     a.href = url;
-    a.download = `trim_${begin}-${end}.mp4`;
+    a.download = `clip_${ranges[activeTab].title}.mp4`;
     a.click();
-
-    // Optionally terminate ffmpeg to free memory
-    await ffmpeg.terminate();
 
     setLoading(false);
   };
@@ -78,86 +75,97 @@ export default function VideoEditor() {
         <h1 className="text-xl font-semibold">Simple Video Trimmer</h1>
       </header>
 
-      {/* Video Player */}
-      <div className="aspect-video rounded-xl overflow-hidden shadow">
-        <ReactPlayer
-          ref={playerRef}
-          url="/minecraft.mp4"
-          controls
-          width="100%"
-          height="100%"
-          onProgress={({ playedSeconds }) => {
-            const { begin, end } = ranges[activeTab];
-            // Loop playback within the selected range
-            if (playedSeconds < begin || playedSeconds > end) {
-              playerRef.current.seekTo(begin, 'seconds');
-            }
-          }}
-        />
+      <div className='flex flex-row gap-5 justify-between'>
+
+        {/* Video Player */}
+        <div className="aspect-video rounded-xl overflow-hidden shadow w-1/2" >
+          <ReactPlayer
+            ref={playerRef}
+            url="/minecraft.mp4"
+            controls
+            width="100%"
+            height="100%"
+            onProgress={({ playedSeconds }) => {
+              const { begin, end } = ranges[activeTab];
+              // loop the selected clip
+              if (playedSeconds < begin || playedSeconds > end) {
+                playerRef.current.seekTo(begin, 'seconds');
+              }
+            }}
+          />
+        </div>
+
+        <div className='flex flex-col w-1/2 justify-between'>
+          {/* HeroUI Tabs for Multiple Segments */}
+          <div>
+            <Tabs
+              selectedKey={String(activeTab)}
+              onSelectionChange={(key) => setActiveTab(Number(key))}
+              items={clipMap}
+            >
+              {(item) => (
+                <Tab
+                  key={item.id}
+                  title={
+                    <div className="flex items-center gap-1">
+                      <ChevronLeft size={14} /> Clip {item.id + 1} <ChevronRight size={14} />
+                    </div>
+                  }
+                >
+                  <p>
+                    <strong>Clip {item.id}:</strong> {item.title}
+                  </p>
+                </Tab>
+              )}
+            </Tabs>
+
+            {/* Time Inputs */}
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center space-x-2">
+                <span>Start (s):</span>
+                <input
+                  type="number"
+                  value={ranges[activeTab].begin}
+                  onChange={(e) => updateRange('begin', +e.target.value)}
+                  className="w-20 p-1 border rounded"
+                />
+              </label>
+              <label className="flex items-center space-x-2">
+                <span>End (s):</span>
+                <input
+                  type="number"
+                  value={ranges[activeTab].end}
+                  onChange={(e) => updateRange('end', +e.target.value)}
+                  className="w-20 p-1 border rounded"
+                />
+              </label>
+            </div>
+
+          </div>
+
+          {/* Export Button */}
+          <div>
+            <Button
+              variant="solid"
+              onClick={exportClip}
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? 'Exporting…' : 'Export Current Segment'}
+            </Button>
+          </div>
+        </div>
       </div>
+
 
       {/* Thumbnail Timeline Placeholder */}
-      <div className="h-24 bg-gray-100 rounded flex items-center justify-center">
+      {/* <div className="h-24 bg-gray-100 rounded flex items-center justify-center">
         <span className="text-gray-500">[Thumbnail Timeline Here]</span>
-      </div>
+      </div> */}
 
-      {/* Time Inputs */}
-      <div className="flex items-center space-x-4">
-        <label className="flex items-center space-x-2">
-          <span>Start (s):</span>
-          <input
-            type="number"
-            value={ranges[activeTab].begin}
-            onChange={(e) => updateRange('begin', +e.target.value)}
-            className="w-20 p-1 border rounded"
-          />
-        </label>
-        <label className="flex items-center space-x-2">
-          <span>End (s):</span>
-          <input
-            type="number"
-            value={ranges[activeTab].end}
-            onChange={(e) => updateRange('end', +e.target.value)}
-            className="w-20 p-1 border rounded"
-          />
-        </label>
-      </div>
 
-      {/* HeroUI Tabs for Multiple Segments */}
-      <Tabs
-        selectedKey={String(activeTab)}
-        onSelectionChange={(key) => setActiveTab(Number(key))}
-        className="bg-gray-50 rounded-lg p-2"
-      >
-        {ranges.map((range, i) => (
-          <Tab
-            key={i}
-            itemKey={String(i)}
-            title={
-              <div className="flex items-center gap-1">
-                <ChevronLeft size={14} /> Segment {i + 1} <ChevronRight size={14} />
-              </div>
-            }
-            className="px-3 py-1 rounded hover:bg-gray-200"
-          >
-            <p>
-              <strong>Segment {i + 1}:</strong> {range.begin}s — {range.end}s
-            </p>
-          </Tab>
-        ))}
-      </Tabs>
 
-      {/* Export Button */}
-      <div>
-        <Button
-          variant="solid"
-          onClick={exportTrim}
-          disabled={loading}
-          className="w-full"
-        >
-          {loading ? 'Exporting…' : 'Export Current Segment'}
-        </Button>
-      </div>
+
     </div>
   );
 }

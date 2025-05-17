@@ -11,15 +11,15 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^1.9.1
         version: 1.9.1
-      '@google-cloud/storage':
-        specifier: ^7.16.0
-        version: 7.16.0
       '@ffmpeg/ffmpeg':
         specifier: ^0.12.15
         version: 0.12.15
       '@ffmpeg/util':
         specifier: ^0.12.2
         version: 0.12.2
+      '@google-cloud/storage':
+        specifier: ^7.16.0
+        version: 7.16.0
       '@heroui/accordion':
         specifier: ^2.2.16
         version: 2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -29,6 +29,9 @@ importers:
       '@heroui/code':
         specifier: 2.2.14
         version: 2.2.14(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/form':
+        specifier: ^2.1.18
+        version: 2.1.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/image':
         specifier: ^2.2.12
         version: 2.2.12(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -104,9 +107,6 @@ importers:
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
-      skillset_web:
-        specifier: link:стол\projects\hackathons\skillset_web
-        version: link:стол/projects/hackathons/skillset_web
       react-player:
         specifier: ^2.16.0
         version: 2.16.0(react@18.3.1)
