@@ -23,11 +23,13 @@ export const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar maxWidth="xl" position="sticky" className="p-2">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <VideoIcon size={48} className="text-primary mx-2" />
+            <div className="flex justify-center items-center aspect-square w-12 bg-primary rounded-md mx-2">
+              <VideoIcon width={48} height={48} className="text-background mx-2" />
+            </div>
             <p className="text-3xl text-primary font-bold">Viral Shorts AI</p>
           </NextLink>
         </NavbarBrand>

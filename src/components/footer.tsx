@@ -6,11 +6,11 @@ export function Footer() {
       <Link
         isExternal
         className="flex items-center gap-1 text-current"
-        href="https://heroui.com?utm_source=next-app-template"
+        href=""
         title="heroui.com homepage"
       >
-        <span className="text-default-600">Powered by</span>
-        <p className="text-primary">HeroUI</p>
+        <span className="text-default-600">Made for</span>
+        <p className="text-primary">Skillset Hackathon</p>
       </Link>
     </footer>
   );
