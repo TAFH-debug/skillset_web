@@ -1,21 +1,30 @@
 "use client";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import Block from "@/components/block";
 import { title } from "@/components/primitives";
 import { Upload } from 'lucide-react';
-export default function Home() {
+import { Input } from "@heroui/input";
+import { ChangeEvent, useState } from "react";
+import axios from "axios";
+import ReactPlayer from "react-player";
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+export default function Home() {
+  const [clips, setClips] = useState<Clip[]>([]);
+  
+  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const response = await fetch("/api/s3/upload", {
-      method: "POST",
-      body: formData
-    });
-    const data = await response.json();
-    console.log(data);
+    const formData = new FormData();
+    formData.append("file", event.target.files![0]); 
+
+    const response = await axios.post("/api/s3/upload", formData);
+    
+    const link = response.data.downloadUrl;
+    console.log(link);
+
+    const highlights = await axios.post("/api/video/highlights", { file: link });
+    console.log(highlights.data.outputs);
+
+    setClips(highlights.data.outputs);
   }
 
   return (
@@ -27,17 +36,27 @@ export default function Home() {
             </span>
         </div>
 
-      <Form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label>
-          <span>Upload a file</span>
-          <input type="file" name="file" />
-        </label>
-        <button type="submit">Submit</button>
-      </Form>
-        <div className="cursor-pointer">
-          <Button size="lg" color="primary" className="" endContent={<Upload size={16}/>}>Get started</Button>
+        <div>
+          <Input
+            type="file"
+            name="file" 
+            size="lg" 
+            color="primary" 
+            endContent={<Upload size={16}/>}
+            onChange={handleSubmit}
+          />
         </div>
+        {
+          clips.length > 0 && (
+            <div>
+              {clips.map((clip) => (
+                <ReactPlayer controls={true} url={clip.data[0].url} key={clip.data[1].title} />
+              ))}
+            </div>
+          )
+        }
       </section>
+
       <section className="mt-20">
         <div id="scroll" className="flex flex-col md:flex-row gap-20 justify-center items-stretch max-w-screen mb-10">
         <div  >

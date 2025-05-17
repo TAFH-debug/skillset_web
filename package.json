@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
-    "@google-cloud/storage": "^7.16.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
+    "@google-cloud/storage": "^7.16.0",
     "@heroui/accordion": "^2.2.16",
     "@heroui/button": "2.2.19",
     "@heroui/code": "2.2.14",
@@ -30,6 +30,7 @@
     "@neondatabase/serverless": "^1.0.0",
     "@react-aria/ssr": "3.9.8",
     "@react-aria/visually-hidden": "3.8.22",
+    "axios": "^1.9.0",
     "clsx": "2.1.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
