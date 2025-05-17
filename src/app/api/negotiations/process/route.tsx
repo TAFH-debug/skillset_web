@@ -2,11 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from 'ffmpeg-static';
+import { sieveAxios } from '@/lib/axios';
+import { bucket } from '@/lib/s3';
 
 if (!ffmpegPath) throw new Error('FFmpeg binary not found');
 const ffmpegBin = path.join(
   process.cwd(),
-  'node_modules/.pnpm/ffmpeg-static@5.2.0/node_modules/ffmpeg-static/ffmpeg.exe'
+  'node_modules/ffmpeg-static/ffmpeg.exe'
 );
 ffmpeg.setFfmpegPath(ffmpegBin);
 
@@ -59,31 +61,23 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.SIEVE_API_KEY!;
 
-    const response = await fetch('https://mango.sievedata.com/v2/push', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': apiKey,
+    const response = await sieveAxios.post('/push', {
+      function: 'sieve/transcribe',
+      inputs: {
+        file: { url: audioUrl },
+        backend: 'stable-ts-whisper-large-v3-turbo',
+        word_level_timestamps: true,
+        source_language: 'auto',
+        diarization_backend: 'None',
+        min_speakers: -1,
+        max_speakers: -1,
+        segmentation_backend: 'ffmpeg-silence',
+        min_silence_length: 0.4,
+        vad_threshold: 0.2,
       },
-      body: JSON.stringify({
-        function: 'sieve/transcribe',
-        inputs: {
-          file: { url: audioUrl },
-          backend: 'stable-ts-whisper-large-v3-turbo',
-          word_level_timestamps: true,
-          source_language: 'auto',
-          diarization_backend: 'None',
-          min_speakers: -1,
-          max_speakers: -1,
-          segmentation_backend: 'ffmpeg-silence',
-          min_silence_length: 0.4,
-          vad_threshold: 0.2,
-        },
-      }),
     });
 
-    const data = await response.json();
-    const jobId = data.id;
+    const jobId = response.data.id;
 
     if (!jobId) {
       return new Response(JSON.stringify({ error: 'No job ID returned from Sieve' }), {
@@ -93,7 +87,7 @@ export async function POST(req: Request) {
     }
 
     const jobResult = await waitForJobCompletion(jobId, apiKey);
-    const segments = jobResult.outputs?.flatMap(output => output?.data?.segments || []) || [];
+    const segments = jobResult.outputs?.flatMap((output: any) => output?.data?.segments || []) || [];
     console.log(segments);
     if (!segments.length) {
       return new Response(JSON.stringify({ error: 'No segments returned from transcription job' }), {
@@ -113,9 +107,8 @@ export async function POST(req: Request) {
     const outputFileName = `output-${Date.now()}.mp4`;
     const outputFilePath = path.join(process.cwd(), 'public', outputFileName);
 
-    // Step 4: attach subtitles
     await new Promise<void>((resolve, reject) => {
-      ffmpeg(outputFilePath)
+      ffmpeg(audioUrl)
         .complexFilter([
           {
             filter: 'subtitles',
@@ -133,7 +126,15 @@ export async function POST(req: Request) {
         .save(outputFilePath);
     });
 
-    return new Response(JSON.stringify({ url: `/${outputFileName}` }), {
+    const link = await bucket.upload(outputFilePath, {
+        destination: outputFileName,
+        predefinedAcl: 'publicRead',
+        metadata: {
+            contentType: "video/mp4",
+        }
+    });
+
+    return new Response(JSON.stringify({ url: link[0].metadata.mediaLink }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@google-cloud/storage": "^7.16.0",
@@ -30,6 +31,7 @@
     "@heroui/system": "2.4.15",
     "@heroui/tabs": "^2.2.16",
     "@heroui/theme": "2.4.15",
+    "@heroui/toast": "^2.0.9",
     "@neondatabase/serverless": "^1.0.0",
     "@react-aria/ssr": "3.9.8",
     "@react-aria/visually-hidden": "3.8.22",

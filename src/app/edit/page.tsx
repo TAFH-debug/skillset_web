@@ -45,8 +45,9 @@ export default function VideoEditor() {
 
     const trimmed = await ffmpeg.readFile('output.mp4');
     const url = URL.createObjectURL(
-      new Blob([trimmed.buffer], { type: 'video/mp4' })
+      new Blob([trimmed], { type: 'video/mp4' })
     );
+    
     const a = document.createElement('a');
     a.href = url;
     a.download = `clip_${ranges[activeTab].title}.mp4`;

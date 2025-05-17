@@ -26,6 +26,8 @@ export default function Home() {
       alert('Ошибка: ' + data.error);
     }
   };
+
+  
   return (
     <div className="max-w-xl mx-auto p-4 shadow rounded">
       <h2 className="text-xl font-semibold mb-4">Добавить субтитры к видео</h2>

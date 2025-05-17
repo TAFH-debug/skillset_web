@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import NoSSRWrapper from "@/components/NoSSRWrapper";
+import { ToastProvider } from "@heroui/toast";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       <HeroUIProvider navigate={router.push}>
         <NextThemesProvider {...themeProps}>
           <NoSSRWrapper>
+            <ToastProvider />
             {children}
           </NoSSRWrapper>
         </NextThemesProvider>

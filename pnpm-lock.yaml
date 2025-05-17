@@ -11,6 +11,9 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^1.9.1
         version: 1.9.1
+      '@ffmpeg-installer/ffmpeg':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@ffmpeg/ffmpeg':
         specifier: ^0.12.15
         version: 0.12.15
@@ -71,6 +74,9 @@ importers:
       '@heroui/theme':
         specifier: 2.4.15
         version: 2.4.15(tailwindcss@3.4.16)
+      '@heroui/toast':
+        specifier: ^2.0.9
+        version: 2.0.9(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@neondatabase/serverless':
         specifier: ^1.0.0
         version: 1.0.0
@@ -597,6 +603,49 @@ packages:
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@ffmpeg-installer/darwin-arm64@4.1.5':
+    resolution: {integrity: sha512-hYqTiP63mXz7wSQfuqfFwfLOfwwFChUedeCVKkBtl/cliaTM7/ePI9bVzfZ2c+dWu3TqCwLDRWNSJ5pqZl8otA==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@ffmpeg-installer/darwin-x64@4.1.0':
+    resolution: {integrity: sha512-Z4EyG3cIFjdhlY8wI9aLUXuH8nVt7E9SlMVZtWvSPnm2sm37/yC2CwjUzyCQbJbySnef1tQwGG2Sx+uWhd9IAw==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@ffmpeg-installer/ffmpeg@1.1.0':
+    resolution: {integrity: sha512-Uq4rmwkdGxIa9A6Bd/VqqYbT7zqh1GrT5/rFwCwKM70b42W5gIjWeVETq6SdcL0zXqDtY081Ws/iJWhr1+xvQg==}
+
+  '@ffmpeg-installer/linux-arm64@4.1.4':
+    resolution: {integrity: sha512-dljEqAOD0oIM6O6DxBW9US/FkvqvQwgJ2lGHOwHDDwu/pX8+V0YsDL1xqHbj1DMX/+nP9rxw7G7gcUvGspSoKg==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@ffmpeg-installer/linux-arm@4.1.3':
+    resolution: {integrity: sha512-NDf5V6l8AfzZ8WzUGZ5mV8O/xMzRag2ETR6+TlGIsMHp81agx51cqpPItXPib/nAZYmo55Bl2L6/WOMI3A5YRg==}
+    cpu: [arm]
+    os: [linux]
+
+  '@ffmpeg-installer/linux-ia32@4.1.0':
+    resolution: {integrity: sha512-0LWyFQnPf+Ij9GQGD034hS6A90URNu9HCtQ5cTqo5MxOEc7Rd8gLXrJvn++UmxhU0J5RyRE9KRYstdCVUjkNOQ==}
+    cpu: [ia32]
+    os: [linux]
+
+  '@ffmpeg-installer/linux-x64@4.1.0':
+    resolution: {integrity: sha512-Y5BWhGLU/WpQjOArNIgXD3z5mxxdV8c41C+U15nsE5yF8tVcdCGet5zPs5Zy3Ta6bU7haGpIzryutqCGQA/W8A==}
+    cpu: [x64]
+    os: [linux]
+
+  '@ffmpeg-installer/win32-ia32@4.1.0':
+    resolution: {integrity: sha512-FV2D7RlaZv/lrtdhaQ4oETwoFUsUjlUiasiZLDxhEUPdNDWcH1OU9K1xTvqz+OXLdsmYelUDuBS/zkMOTtlUAw==}
+    cpu: [ia32]
+    os: [win32]
+
+  '@ffmpeg-installer/win32-x64@4.1.0':
+    resolution: {integrity: sha512-Drt5u2vzDnIONf4ZEkKtFlbvwj6rI3kxw1Ck9fpudmtgaZIHD4ucsWB2lCZBXRxJgXR+2IMSti+4rtM4C4rXgg==}
+    cpu: [x64]
+    os: [win32]
+
   '@ffmpeg/ffmpeg@0.12.15':
     resolution: {integrity: sha512-1C8Obr4GsN3xw+/1Ww6PFM84wSQAGsdoTuTWPOj2OizsRDLT4CXTaVjPhkw6ARyDus1B9X/L2LiXHqYYsGnRFw==}
     engines: {node: '>=18.x'}
@@ -840,6 +889,15 @@ packages:
     resolution: {integrity: sha512-cP1N9Rqj5wzsKLpEzNdJQRjX2g9AuCZbRNaIuIGnztqmmGtP3Yykt1RzeQ4ukCdSDjk/PmV8XneTu8OC8Cs8HA==}
     peerDependencies:
       tailwindcss: '>=3.4.0'
+
+  '@heroui/toast@2.0.9':
+    resolution: {integrity: sha512-V/x7bkRRS5BabF3Oe4sJWiKygkGtN9/mwFw0phJwx7PYV2Q6WuOvOvq+Zbt8bEz21j58glg4u+eLFBChNPYn7A==}
+    peerDependencies:
+      '@heroui/system': '>=2.4.10'
+      '@heroui/theme': '>=2.4.12'
+      framer-motion: '>=11.5.6 || >=12.0.0-alpha.1'
+      react: '>=18 || >=19.0.0-rc.0'
+      react-dom: '>=18 || >=19.0.0-rc.0'
 
   '@heroui/tooltip@2.2.16':
     resolution: {integrity: sha512-pdQZTW04P+Ol6fr6ZfCHDVT+BRksx0n2kGJskMpEYKS0Q4Dk1AKmbVxfHYrT7yOQFQTTmTFJzkbbFMLFgg/Wrg==}
@@ -1193,6 +1251,12 @@ packages:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
+  '@react-aria/landmark@3.0.2':
+    resolution: {integrity: sha512-KVXa9s3fSgo/PiUjdbnPh3a1yS4t2bMZeVBPPzYAgQ4wcU2WjuLkhviw+5GWSWRfT+jpIMV7R/cmyvr0UHvRfg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
   '@react-aria/link@3.8.0':
     resolution: {integrity: sha512-gpDD6t3FqtFR9QjSIKNpmSR3tS4JG2anVKx2wixuRDHO6Ddexxv4SBzsE1+230p+FlFGjftFa2lEgQ7RNjZrmA==}
     peerDependencies:
@@ -1243,6 +1307,12 @@ packages:
 
   '@react-aria/textfield@3.17.2':
     resolution: {integrity: sha512-4KINB0HueYUHUgvi/ThTP27hu4Mv5ujG55pH3dmSRD4Olu/MRy1m/Psq72o8LTf4bTOM9ZP1rKccUg6xfaMidA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-aria/toast@3.0.2':
+    resolution: {integrity: sha512-iaiHDE1CKYM3BbNEp3A2Ed8YAlpXUGyY6vesKISdHEZ2lJ7r+1hbcFoTNdG8HfbB8Lz5vw8Wd2o+ZmQ2tnDY9Q==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
@@ -1307,6 +1377,11 @@ packages:
 
   '@react-stately/tabs@3.8.1':
     resolution: {integrity: sha512-1TBbt2BXbemstb/gEYw/NVt3esi5WvgWQW5Z7G8nDzLkpnMHOZXueoUkMxsdm0vhE8p0M9fsJQCMXKvCG3JzJg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-stately/toast@3.1.0':
+    resolution: {integrity: sha512-9W2+evz+EARrjkR1QPLlOL5lcNpVo6PjMAIygRSaCPJ6ftQAZ6B+7xTFGPFabWh83gwXQDUgoSwC3/vosvxZaQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -3558,6 +3633,11 @@ packages:
       '@types/react':
         optional: true
 
+  use-sync-external-store@1.5.0:
+    resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -3872,6 +3952,41 @@ snapshots:
     dependencies:
       '@eslint/core': 0.13.0
       levn: 0.4.1
+
+  '@ffmpeg-installer/darwin-arm64@4.1.5':
+    optional: true
+
+  '@ffmpeg-installer/darwin-x64@4.1.0':
+    optional: true
+
+  '@ffmpeg-installer/ffmpeg@1.1.0':
+    optionalDependencies:
+      '@ffmpeg-installer/darwin-arm64': 4.1.5
+      '@ffmpeg-installer/darwin-x64': 4.1.0
+      '@ffmpeg-installer/linux-arm': 4.1.3
+      '@ffmpeg-installer/linux-arm64': 4.1.4
+      '@ffmpeg-installer/linux-ia32': 4.1.0
+      '@ffmpeg-installer/linux-x64': 4.1.0
+      '@ffmpeg-installer/win32-ia32': 4.1.0
+      '@ffmpeg-installer/win32-x64': 4.1.0
+
+  '@ffmpeg-installer/linux-arm64@4.1.4':
+    optional: true
+
+  '@ffmpeg-installer/linux-arm@4.1.3':
+    optional: true
+
+  '@ffmpeg-installer/linux-ia32@4.1.0':
+    optional: true
+
+  '@ffmpeg-installer/linux-x64@4.1.0':
+    optional: true
+
+  '@ffmpeg-installer/win32-ia32@4.1.0':
+    optional: true
+
+  '@ffmpeg-installer/win32-x64@4.1.0':
+    optional: true
 
   '@ffmpeg/ffmpeg@0.12.15':
     dependencies:
@@ -4301,6 +4416,24 @@ snapshots:
       tailwind-variants: 0.3.0(tailwindcss@3.4.16)
       tailwindcss: 3.4.16
 
+  '@heroui/toast@2.0.9(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@heroui/react-utils': 2.1.10(react@18.3.1)
+      '@heroui/shared-icons': 2.1.7(react@18.3.1)
+      '@heroui/shared-utils': 2.1.9
+      '@heroui/spinner': 2.2.16(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/system': 2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/theme': 2.4.15(tailwindcss@3.4.16)
+      '@heroui/use-is-mobile': 2.2.9(react@18.3.1)
+      '@react-aria/interactions': 3.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/toast': 3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/utils': 3.28.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-stately/toast': 3.1.0(react@18.3.1)
+      '@react-stately/utils': 3.10.6(react@18.3.1)
+      framer-motion: 11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@heroui/tooltip@2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@heroui/aria-utils': 2.2.16(@heroui/theme@2.4.15(tailwindcss@3.4.16))(framer-motion@11.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4654,6 +4787,15 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@react-aria/landmark@3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@react-aria/utils': 3.28.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-types/shared': 3.29.0(react@18.3.1)
+      '@swc/helpers': 0.5.17
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      use-sync-external-store: 1.5.0(react@18.3.1)
+
   '@react-aria/link@3.8.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@react-aria/interactions': 3.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4759,6 +4901,19 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@react-aria/toast@3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@react-aria/i18n': 3.12.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/interactions': 3.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/landmark': 3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-aria/utils': 3.28.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-stately/toast': 3.1.0(react@18.3.1)
+      '@react-types/button': 3.12.0(react@18.3.1)
+      '@react-types/shared': 3.29.0(react@18.3.1)
+      '@swc/helpers': 0.5.17
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@react-aria/toggle@3.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@react-aria/interactions': 3.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4858,6 +5013,12 @@ snapshots:
       '@react-types/tabs': 3.3.14(react@18.3.1)
       '@swc/helpers': 0.5.17
       react: 18.3.1
+
+  '@react-stately/toast@3.1.0(react@18.3.1)':
+    dependencies:
+      '@swc/helpers': 0.5.17
+      react: 18.3.1
+      use-sync-external-store: 1.5.0(react@18.3.1)
 
   '@react-stately/toggle@3.8.3(react@18.3.1)':
     dependencies:
@@ -7368,6 +7529,10 @@ snapshots:
       use-isomorphic-layout-effect: 1.2.0(@types/react@18.3.3)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.3
+
+  use-sync-external-store@1.5.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   util-deprecate@1.0.2: {}
 

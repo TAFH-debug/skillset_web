@@ -10,35 +10,49 @@ import axios from "axios";
 import ReactPlayer from "react-player";
 import { Button } from "@heroui/button";
 import { Clip } from "@/lib/types";
-
-const example: Clip[] = [];
+import { addToast } from "@heroui/toast";
 
 export default function Home() {
-  const [clips, setClips] = useState<Clip[]>(example);
+  const [clips, setClips] = useState<string[]>([]);
   const [progress, setProgress] = useState("");
 
   const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-
-    let file = event.target.files![0];
-
-    setProgress("Uploading...");
-
-    const formData = new FormData();
-    formData.append("file", file); 
-
-    const response = await axios.post("/api/s3/upload", formData);
     
-    setProgress("Uploading to S3...");
-    const link = response.data.downloadUrl;
+    try {
+      let file = event.target.files![0];
 
-    setProgress("Generating highlights...");
-
-    const highlights = await axios.post("/api/video/highlights", { file: link });
-
-    setProgress("");
-
-    setClips(highlights.data.outputs);
+      setProgress("Uploading...");
+  
+      const formData = new FormData();
+      formData.append("file", file); 
+  
+      const response = await axios.post("/api/s3/upload", formData);
+      
+      setProgress("Uploading to S3...");
+      const link = response.data.downloadUrl;
+  
+      setProgress("Generating subtitles...");
+      const subtitles = await axios.post("/api/negotiations/process", { audioUrl: link });
+  
+  
+      setProgress("Generating highlights...");
+  
+      const highlights = await axios.post("/api/video/highlights", { file: subtitles.data.url });
+  
+      console.log(`Generated ${highlights.data.outputs.length} highlights`);
+  
+      setProgress("");
+  
+      setClips(highlights.data.outputs.map((highlight: any) => highlight.data[0].url));
+    } catch (err) {
+      addToast({
+        title: "Error generating highlights",
+        description: "Please try again",
+        color: "danger",
+      });
+      console.log(err);
+    }
   }
 
   return (
@@ -71,11 +85,12 @@ export default function Home() {
             />
           </div>
         }
+        <p className="text-md opacity-60">Please choose a video with at least 2 minutes of content. It may take a while to generate the highlights...</p>
         {
           clips.length > 0 && (
             <div className="flex flex-wrap gap-4 max-w-full items-center justify-center">
               {clips.map((clip) => (
-                <ReactPlayer controls={true} url={clip.data[0].url} key={clip.data[1].title} width={400} />
+                <ReactPlayer controls={true} url={clip} key={clip} width={400} />
               ))}
             </div>
           )
