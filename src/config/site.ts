@@ -8,11 +8,19 @@ export const siteConfig = {
       label: "Home",
       href: "/",
     },
+    {
+      label: "Editor",
+      href: "/editor",
+    }
   ],
   navMenuItems: [
     {
       label: "Home",
       href: "/",
     },
+    {
+      label: "Editor",
+      href: "/editor",
+    }
   ],
 };
