@@ -4,7 +4,6 @@ export const sieveAxios = axios.create({
     baseURL: "https://mango.sievedata.com/v2",
     headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.SIEVE_API_KEY}`
     },
 });
 

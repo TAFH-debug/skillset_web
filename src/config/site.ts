@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js Template",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Viral Shorts AI",
+  description: "Make viral shorts with AI.",
   navItems: [
     {
       label: "Home",
@@ -10,7 +10,7 @@ export const siteConfig = {
     },
     {
       label: "Editor",
-      href: "/editor",
+      href: "/edit",
     }
   ],
   navMenuItems: [
@@ -20,7 +20,7 @@ export const siteConfig = {
     },
     {
       label: "Editor",
-      href: "/editor",
+      href: "/edit",
     }
   ],
 };

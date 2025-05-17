@@ -17,6 +17,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { VideoIcon } from "lucide-react";
 
 export const Navbar = () => {
   const { data: session } = useSession();
@@ -26,22 +27,27 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
+            <VideoIcon size={48} className="text-primary mx-2" />
             <p className="text-3xl text-primary font-bold">Viral Shorts AI</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+      </NavbarContent>
+
+      <NavbarContent className="basis-1/5 sm:basis-full" justify='center'>
+        <ul className="flex gap-4 justify-center ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
-              <NextLink
+              <Button
+                as={Link}
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
-                color="foreground"
+                variant="light"
                 href={item.href}
               >
                 {item.label}
-              </NextLink>
+              </Button>
             </NavbarItem>
           ))}
         </ul>
