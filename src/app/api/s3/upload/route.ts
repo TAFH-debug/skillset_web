@@ -26,7 +26,7 @@ const handler = async (req: NextRequest) => {
       public: true
     });
 
-    return new Promise((resolve, reject) => {
+    const promise: Promise<NextResponse> = new Promise((resolve, reject) => {
       blobStream.on('error', (error) => {
         console.error('Error uploading to GCS:', error);
         resolve(NextResponse.json(
@@ -47,6 +47,8 @@ const handler = async (req: NextRequest) => {
 
       blobStream.end(buffer);
     });
+
+    return promise;
 
   } catch (error) {
     console.error('Error processing upload:', error);
