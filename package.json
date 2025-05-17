@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
+    "@google-cloud/storage": "^7.16.0",
     "@heroui/button": "2.2.19",
     "@heroui/code": "2.2.14",
     "@heroui/input": "2.4.19",
@@ -34,7 +35,9 @@
     "next-auth": "^4.24.11",
     "next-themes": "0.4.6",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "skillset_web": "link:стол\\projects\\hackathons\\skillset_web",
+    "Рабочий": "link:C:/Users/ausha/OneDrive/Рабочий"
   },
   "devDependencies": {
     "@eslint/compat": "1.2.8",
