@@ -5,7 +5,6 @@ import unusedImports from "eslint-plugin-unused-imports";
 import _import from "eslint-plugin-import";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import jsxA11Y from "eslint-plugin-jsx-a11y";
-import prettier from "eslint-plugin-prettier";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
@@ -45,7 +44,6 @@ export default defineConfig([globalIgnores([
 ]), {
     extends: fixupConfigRules(compat.extends(
         "plugin:react/recommended",
-        "plugin:prettier/recommended",
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
         "plugin:@next/next/recommended",
@@ -57,7 +55,6 @@ export default defineConfig([globalIgnores([
         import: fixupPluginRules(_import),
         "@typescript-eslint": typescriptEslint,
         "jsx-a11y": fixupPluginRules(jsxA11Y),
-        prettier: fixupPluginRules(prettier),
     },
 
     languageOptions: {
