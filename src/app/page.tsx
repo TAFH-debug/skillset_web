@@ -8,6 +8,8 @@ import { Progress } from "@heroui/progress";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player";
+import { Button } from "@heroui/button";
+import { Clip } from "@/lib/types";
 
 const example: Clip[] = [];
 
@@ -52,14 +54,19 @@ export default function Home() {
           progress !== "" ? <div className="w-full my-2">
             <p className="text-md opacity-60">{progress}</p>
             <Progress isStriped isIndeterminate aria-label="Loading..." className="w-full" />
-          </div> : <div>
+          </div> : <div className="flex flex-col gap-2 cursor-pointer">
+            <Button color="primary" className="cursor-pointer">
+              <label htmlFor="input" className="w-full h-full flex flex-row items-center gap-2 text-sm font-medium cursor-pointer">
+                <Upload size={16} /> Upload a video
+              </label>
+            </Button>
             <Input
+              id="input" 
               type="file"
               name="file" 
-              size="lg" 
-              color="primary" 
+              className="hidden"
+              color="primary"
               accept=".mp4, .mov, .webm"
-              endContent={<Upload size={16}/>}
               onChange={handleSubmit}
             />
           </div>

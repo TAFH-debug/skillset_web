@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from 'ffmpeg-static';
+
 if (!ffmpegPath) throw new Error('FFmpeg binary not found');
 const ffmpegBin = path.join(
   process.cwd(),
@@ -56,7 +57,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const apiKey = 'fig tebe';
+    const apiKey = process.env.SIEVE_API_KEY!;
 
     const response = await fetch('https://mango.sievedata.com/v2/push', {
       method: 'POST',
@@ -82,7 +83,7 @@ export async function POST(req: Request) {
     });
 
     const data = await response.json();
-    const jobId = "830c739a-7b0d-4a7a-ac49-8b292cc326b8";
+    const jobId = data.id;
 
     if (!jobId) {
       return new Response(JSON.stringify({ error: 'No job ID returned from Sieve' }), {
@@ -114,7 +115,7 @@ export async function POST(req: Request) {
 
     // Step 4: attach subtitles
     await new Promise<void>((resolve, reject) => {
-      ffmpeg(videoPath)
+      ffmpeg(outputFilePath)
         .complexFilter([
           {
             filter: 'subtitles',

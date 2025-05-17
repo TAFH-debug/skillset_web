@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-import { db } from "@/db/drizzle";
+import { db } from "@/db/schema";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),

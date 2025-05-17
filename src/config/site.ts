@@ -11,6 +11,10 @@ export const siteConfig = {
     {
       label: "Editor",
       href: "/edit",
+    },
+    {
+      label: "Projects",
+      href: "/projects",
     }
   ],
   navMenuItems: [
@@ -21,6 +25,10 @@ export const siteConfig = {
     {
       label: "Editor",
       href: "/edit",
+    },
+    {
+      label: "Projects",
+      href: "/projects",
     }
   ],
 };

@@ -9,7 +9,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
-// Initialize ffmpeg-wasm instance
 const ffmpeg = new FFmpeg();
 
 const clipMap = [
@@ -24,22 +23,18 @@ export default function VideoEditor() {
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Load ffmpeg core on mount
   useEffect(() => {
     ffmpeg.load();
   }, []);
 
-  // Export the current segment using ffmpeg.wasm
   const exportClip = async () => {
     setLoading(true);
 
     const { begin, end } = ranges[activeTab];
 
-    // Fetch the source file and write to ffmpeg FS
     const data = await fetchFile('/minecraft.mp4');
     await ffmpeg.writeFile('input.mp4', data);
 
-    // Run the trim command
     await ffmpeg.exec([
       '-i', 'input.mp4',
       '-ss', `${begin}`,
@@ -48,7 +43,6 @@ export default function VideoEditor() {
       'output.mp4',
     ]);
 
-    // Read the trimmed file and trigger download
     const trimmed = await ffmpeg.readFile('output.mp4');
     const url = URL.createObjectURL(
       new Blob([trimmed.buffer], { type: 'video/mp4' })
@@ -61,7 +55,6 @@ export default function VideoEditor() {
     setLoading(false);
   };
 
-  // Update begin/end times in state
   const updateRange = (field: 'begin' | 'end', val: number) => {
     setRanges((rs) =>
       rs.map((r, i) => (i === activeTab ? { ...r, [field]: val } : r))
@@ -70,14 +63,12 @@ export default function VideoEditor() {
 
   return (
     <div className="p-6 space-y-8">
-      {/* Hero Header */}
       <header className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 rounded-2xl shadow-lg text-white">
         <h1 className="text-xl font-semibold">Simple Video Trimmer</h1>
       </header>
 
       <div className='flex flex-row gap-5 justify-between'>
 
-        {/* Video Player */}
         <div className="aspect-video rounded-xl overflow-hidden shadow w-1/2" >
           <ReactPlayer
             ref={playerRef}
@@ -96,7 +87,6 @@ export default function VideoEditor() {
         </div>
 
         <div className='flex flex-col w-1/2 justify-between'>
-          {/* HeroUI Tabs for Multiple Segments */}
           <div>
             <Tabs
               selectedKey={String(activeTab)}
@@ -119,7 +109,6 @@ export default function VideoEditor() {
               )}
             </Tabs>
 
-            {/* Time Inputs */}
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2">
                 <span>Start (s):</span>
@@ -143,11 +132,10 @@ export default function VideoEditor() {
 
           </div>
 
-          {/* Export Button */}
           <div>
             <Button
               variant="solid"
-              onClick={exportClip}
+              onPress={exportClip}
               disabled={loading}
               className="w-full"
             >
@@ -156,16 +144,6 @@ export default function VideoEditor() {
           </div>
         </div>
       </div>
-
-
-      {/* Thumbnail Timeline Placeholder */}
-      {/* <div className="h-24 bg-gray-100 rounded flex items-center justify-center">
-        <span className="text-gray-500">[Thumbnail Timeline Here]</span>
-      </div> */}
-
-
-
-
     </div>
   );
 }
