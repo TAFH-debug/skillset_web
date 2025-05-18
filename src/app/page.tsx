@@ -9,7 +9,6 @@ import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player";
 import { Button } from "@heroui/button";
-import { Clip } from "@/lib/types";
 import { addToast } from "@heroui/toast";
 
 export default function Home() {
@@ -38,7 +37,7 @@ export default function Home() {
   
       setProgress("Generating highlights...");
   
-      const highlights = await axios.post("/api/video/highlights", { file: subtitles.data.url });
+      const highlights = await axios.post("/api/video/highlights", { file: subtitles.data.url, render: true });
   
       console.log(`Generated ${highlights.data.outputs.length} highlights`);
   

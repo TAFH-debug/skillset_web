@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
-import ffmpegPath from 'ffmpeg-static';
 import { sieveAxios } from '@/lib/axios';
 import { bucket } from '@/lib/s3';
+import os from 'os';
 
-if (!ffmpegPath) throw new Error('FFmpeg binary not found');
-const ffmpegBin = path.join(
-  process.cwd(),
-  'node_modules/ffmpeg-static/ffmpeg.exe'
-);
+if(os.platform() === 'win32'){
+  var ffmpegBin = './bin/ffmpeg.exe'
+}else{
+  var ffmpegBin = './bin/ffmpeg'
+}
 ffmpeg.setFfmpegPath(ffmpegBin);
 
 function secondsToSRTTime(seconds: number): string {

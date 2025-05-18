@@ -6,6 +6,9 @@ import { fetchFile } from '@ffmpeg/util';
 import { Tabs, Tab } from '@heroui/tabs';
 import { Button } from '@heroui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import axios from 'axios';
+import { addToast } from '@heroui/toast';
 
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
@@ -18,22 +21,57 @@ const clipMap = [
 ];
 
 export default function VideoEditor() {
+  const searchParams = useSearchParams();
+  const link = searchParams.get('link');
+
   const playerRef = useRef<any>(null);
   const [ranges, setRanges] = useState(clipMap);
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [clips, setClips] = useState([]);
 
   useEffect(() => {
     ffmpeg.load();
+    ffmpeg.on('log', (message) => {
+      console.log(message);
+    });
   }, []);
+
+  const loadHighlights = async () => {    
+    try {
+      const highlights = await axios.post("/api/video/highlights", { file: link, render: false });
+  
+      console.log(`Generated ${highlights.data.outputs.length} highlights`);
+
+      const newClips = highlights.data.outputs.map((highlight: any) => highlight.data[0]);
+      console.log(newClips);
+      setClips(newClips);
+    } catch (err) {
+      addToast({
+        title: "Error generating highlights",
+        description: "Please try again",
+        color: "danger",
+      });
+      console.log(err);
+    }
+  }
 
   const exportClip = async () => {
     setLoading(true);
 
     const { begin, end } = ranges[activeTab];
 
-    const data = await fetchFile('/minecraft.mp4');
-    await ffmpeg.writeFile('input.mp4', data);
+    const response = await fetch(link!, {
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    });
+    
+    const data = await response.arrayBuffer();
+    await ffmpeg.writeFile('input.mp4', new Uint8Array(data));
 
     await ffmpeg.exec([
       '-i', 'input.mp4',
@@ -73,13 +111,12 @@ export default function VideoEditor() {
         <div className="aspect-video rounded-xl overflow-hidden shadow w-1/2" >
           <ReactPlayer
             ref={playerRef}
-            url="/minecraft.mp4"
+            url={link!}
             controls
             width="100%"
             height="100%"
             onProgress={({ playedSeconds }) => {
               const { begin, end } = ranges[activeTab];
-              // loop the selected clip
               if (playedSeconds < begin || playedSeconds > end) {
                 playerRef.current.seekTo(begin, 'seconds');
               }

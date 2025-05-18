@@ -4,24 +4,26 @@ import { bucket } from "@/lib/s3";
 const handler = async (req: NextRequest) => {
   try {
     const formData = await req.formData();
-    const file = formData.get('file');
+    const fileData = formData.get('file');
 
-    if (!file || !(file instanceof File)) {
+    if (!fileData || !(fileData instanceof Blob)) {
       return NextResponse.json(
-        { error: 'No file provided' },
+        { error: 'No valid file provided' },
         { status: 400 }
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const buffer = Buffer.from(await fileData.arrayBuffer());
+    const originalName = (fileData as unknown as { name?: string }).name || 'unnamed-file';
+    const mimeType = fileData.type || 'application/octet-stream';
 
     const timestamp = Date.now();
-    const uniqueFileName = `${timestamp}-${file.name}`;
+    const uniqueFileName = `${timestamp}-${originalName}`;
 
     const blob = bucket.file(uniqueFileName);
     const blobStream = blob.createWriteStream({
       metadata: {
-        contentType: file.type
+        contentType: mimeType
       },
       public: true
     });

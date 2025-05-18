@@ -46,4 +46,4 @@ next-env.d.ts
 credentials.json
 
 # Output
-pubic/output*
+*.mp4
