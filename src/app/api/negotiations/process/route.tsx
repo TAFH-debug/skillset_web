@@ -30,7 +30,7 @@ function generateSRT(segments: { start: number; end: number; text: string }[]): 
   ).join('\n');
 }
 
-async function waitForJobCompletion(jobId: string, apiKey: string, maxRetries = 20, intervalMs = 3000) {
+async function waitForJobCompletion(jobId: string, apiKey: string, maxRetries = 100, intervalMs = 3000) {
   for (let i = 0; i < maxRetries; i++) {
     const res = await fetch(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
       headers: { 'X-API-Key': apiKey }
